@@ -157,7 +157,7 @@ void pedalStateChange(){
   sPrint(String('speed:') += String(timeSinceLastPedal));
   
   if (IS_SNES){
-    if (timeSinceLastPedal < MINIMUM_SPEED){
+    if (timeSinceLastPedal < SNES_MINIMUM_SPEED){
       pressA();
     }else{
       releaseA();
