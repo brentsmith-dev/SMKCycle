@@ -4,16 +4,18 @@ const long SNES_MINIMUM_SPEED = 200;
 const long SNES_PEDAL_RELEASE_DELAY = 500;
 
 // INPUTS
-const int PEDAL_IN = 2;
+const int PEDAL_IN = A0;
 const int START_IN = 8;
 const int LEFT_IN = 10;
 const int RIGHT_IN = 9;
 
 // OUTPUTS (For SNES)
-const int A_BUTTON = 3;
-const int START_BUTTON = 4;
-const int LEFT_BUTTON = 12;
-const int RIGHT_BUTTON = 11;
+const int A_BUTTON = 2;
+const int B_BUTTON = 3;
+const int DOWN_BUTTON = 4;
+const int RIGHT_BUTTON = 5;
+const int LEFT_BUTTON = 6;
+const int UP_BUTTON = 7;
 
 // OUTPUTS (For Unity ArduinoBikeProxy.cs)
 const String RESET_FLAG          = "^";
@@ -35,9 +37,10 @@ boolean leftPressed = false;
 long lastLoop = millis();
 
 void setup() {
+  
   // SNES Button Outs
   if (IS_SNES){
-    pinMode(START_BUTTON, OUTPUT);
+    pinMode(B_BUTTON, OUTPUT);
     pinMode(A_BUTTON, OUTPUT);
     pinMode(LEFT_BUTTON, OUTPUT);
     pinMode(RIGHT_BUTTON, OUTPUT);
@@ -48,6 +51,9 @@ void setup() {
   pinMode(LEFT_IN, INPUT);
   pinMode(RIGHT_IN, INPUT);
   pinMode(PEDAL_IN, INPUT);
+  // set pullup on analog pin 0 
+  digitalWrite(PEDAL_IN, HIGH);  
+  
   
   // Using a digital pin as +5V
   pinMode(13, OUTPUT);
@@ -137,7 +143,7 @@ void checkStart(){
       sPrint(String("start:0"));
       startPressed = false;
       if (IS_SNES){
-        digitalWrite(START_BUTTON, LOW);
+        digitalWrite(B_BUTTON, LOW);
       }
     }
   }else{
@@ -145,7 +151,7 @@ void checkStart(){
       sPrint(String("start:1"));
       startPressed = true;
       if (IS_SNES){
-        digitalWrite(START_BUTTON, HIGH);  
+        digitalWrite(B_BUTTON, HIGH);  
       }
     }
   }
